@@ -1,0 +1,42 @@
+service: backend-api
+
+frameworkVersion: '3'
+
+provider:
+  name: aws
+  runtime: nodejs18.x
+  region: us-east-1
+  apiGateway:
+    minimumCompressionSize: 1024 # Configura a compressão
+  environment:
+    AWS_NODEJS_CONNECTION_REUSE_ENABLED: 1 # Otimiza a reutilização de conexões
+
+functions:
+  agendas:
+    handler: dist/agenda/controller/agendaController.main
+    events:
+      - httpApi:
+          path: /agendas
+          method: get
+
+# Configuração de plugins
+plugins:
+  - serverless-esbuild
+  - serverless-offline
+
+# Configurações customizadas (se necessário)
+custom:
+  esbuild:
+    watch:
+      pattern: ['src/**/*.ts'] # match only typescript files in src directory
+    bundle: true
+    minify: false
+  serverless-offline:
+    httpPort: 3000 # Porta local para testes offline
+    lambdaPort: 3002
+
+package:
+  individually: true
+
+# Inclusão de todos os arquivos TypeScript necessários
+useDotenv: true
