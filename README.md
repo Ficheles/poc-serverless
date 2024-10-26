@@ -52,6 +52,25 @@ yarn start
 yarn test
 ```
 
+6. Testar Chamadas para Todos os Endpoints
+   Para garantir que todos os endpoints da sua API estejam funcionando corretamente, siga os passos abaixo:
+
+1. Atribuir Permissão de Execução ao Script
+   Antes de executar o script, você precisa garantir que ele tenha permissão de execução. Use o seguinte comando para atribuir as permissões necessárias:
+
+```bash
+chmod +x ./run-api.sh
+```
+
+2.Executar o Script
+Após atribuir as permissões, você pode executar o script para testar todas as chamadas para os endpoints. Utilize o seguinte comando:
+
+```bash
+./run-api.sh
+```
+
+Esse script automatiza as chamadas para todos os endpoints definidos na sua aplicação, facilitando a validação de que estão respondendo conforme esperado.
+
 ### Descrição da API:
 
 1. **Endpoint: Buscar agendas e horários dos médicos**
