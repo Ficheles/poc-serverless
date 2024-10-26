@@ -1,0 +1,39 @@
+# Node.js
+node_modules/
+dist/
+coverage/
+__test__/agendamento
+
+# TypeScript
+*.tsbuildinfo
+*.js
+*.d.ts
+*.js.map
+
+# Exceções
+!eslint.config.js
+!jest.config.js
+
+# Environment Variables
+.env
+.env.local
+.env.*.local
+
+# IDEs
+.vscode/
+.idea/
+*.sublime-project
+*.sublime-workspace
+
+# Logs
+logs/
+*.log
+
+# NPM
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# OS Files
+.DS_Store
+Thumbs.db

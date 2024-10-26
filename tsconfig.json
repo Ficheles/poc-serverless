@@ -1,0 +1,18 @@
+{
+  "compilerOptions": {
+    "target": "ES2020", // Define o padrão ES que o código será compilado.
+    "module": "commonjs", // Usa o sistema de módulos CommonJS (padrão para Node.js).
+    "lib": ["es2020"], // Bibliotecas usadas na compilação.
+    "outDir": "./dist", // Saída dos arquivos compilados.
+    "rootDir": "./src", // Diretório raiz dos arquivos de origem.
+    "strict": true, // Habilita verificações de tipos estritas.
+    "esModuleInterop": true, // Habilita a interoperabilidade com módulos ES6.
+    "skipLibCheck": true, // Ignora a checagem de arquivos de definição de tipo.
+    "forceConsistentCasingInFileNames": true // Garante que o uso de letras maiúsculas/minúsculas nos nomes dos arquivos seja consistente.
+  },
+  "include": [
+    "src/**/*", // Inclui todos os arquivos em src
+    "__tests__/**/*" // Inclui todos os arquivos em __tests__
+  ],
+  "exclude": ["node_modules", "dist", "tsconfig.json"]
+}
