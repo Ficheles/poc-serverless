@@ -1,17 +1,17 @@
-import { createAgendamento } from '../src/agendamento/controller/agendamentoController'; // Ajuste o caminho conforme necessário
+import { create } from '../src/appointment/controller/appointmentController'; // Ajuste o caminho conforme necessário
 import { APIGatewayEvent } from 'aws-lambda';
 import { ErrorMessages } from '../src/utils/errorMessages';
-import { create } from '../src/agendamento/service/agendamentoService';
+import { createAppointment } from '../src/appointment/service/appointmentService';
 import { AppError } from '../src/utils/appError';
 
-jest.mock('../src/agendamento/service/agendamentoService');
+jest.mock('../src/appointment/service/appointmentService');
 
 describe('createAgendamento Handler', () => {
   beforeEach(() => {
     jest.resetAllMocks(); // Reseta todos os mocks antes de cada teste
   });
 
-  it('deve retornar 201 e a mensagem de sucesso', async () => {
+  it('should return 201 and the success message', async () => {
     const event: APIGatewayEvent = {
       body: JSON.stringify({
         medico_id: 1,
@@ -20,13 +20,13 @@ describe('createAgendamento Handler', () => {
       }),
     } as APIGatewayEvent;
 
-    (create as jest.Mock).mockResolvedValueOnce({
+    (createAppointment as jest.Mock).mockResolvedValueOnce({
       medico: 'Dr. João Silva',
       paciente: 'Carlos Almeida',
       data_horario: '2024-10-05 09:00',
     });
 
-    const result = await createAgendamento(event);
+    const result = await create(event);
 
     expect(result).toEqual({
       statusCode: 201,
@@ -41,12 +41,12 @@ describe('createAgendamento Handler', () => {
     });
   });
 
-  it('deve retornar 400 se o corpo estiver ausente', async () => {
+  it('should return 400 if the body is missing', async () => {
     const event: APIGatewayEvent = {
       body: null, // Corpo ausente
     } as APIGatewayEvent;
 
-    const result = await createAgendamento(event);
+    const result = await create(event);
 
     expect(result).toEqual({
       statusCode: 400,
@@ -56,7 +56,7 @@ describe('createAgendamento Handler', () => {
     });
   });
 
-  it('deve retornar 400 se houver erro de validação medico_id ausente', async () => {
+  it('should return 400 if there is a validation error: missing medico_id', async () => {
     const event: APIGatewayEvent = {
       body: JSON.stringify({
         paciente_nome: 'Carlos Almeida',
@@ -64,7 +64,7 @@ describe('createAgendamento Handler', () => {
       }),
     } as APIGatewayEvent;
 
-    const result = await createAgendamento(event);
+    const result = await create(event);
 
     expect(result).toEqual({
       statusCode: 400,
@@ -74,7 +74,7 @@ describe('createAgendamento Handler', () => {
     });
   });
 
-  it('deve retornar 400 se houver erro de validação medico_id não encontrado', async () => {
+  it('should return 400 if there is a validation error: medico_id not found', async () => {
     const event: APIGatewayEvent = {
       body: JSON.stringify({
         medico_id: 3,
@@ -83,8 +83,8 @@ describe('createAgendamento Handler', () => {
       }),
     } as APIGatewayEvent;
 
-    (create as jest.Mock).mockRejectedValue(new AppError(ErrorMessages.MEDICO_NAO_ENCONTRADO));
-    const result = await createAgendamento(event);
+    (createAppointment as jest.Mock).mockRejectedValue(new AppError(ErrorMessages.MEDICO_NAO_ENCONTRADO));
+    const result = await create(event);
 
     expect(result).toEqual({
       statusCode: 400,
@@ -94,7 +94,7 @@ describe('createAgendamento Handler', () => {
     });
   });
 
-  it('deve retornar 400 se houver erro de validação paciente_nome ausente', async () => {
+  it('should return 400 if there is a validation error: missing paciente_nome', async () => {
     const event: APIGatewayEvent = {
       body: JSON.stringify({
         medico_id: 1,
@@ -102,7 +102,7 @@ describe('createAgendamento Handler', () => {
       }),
     } as APIGatewayEvent;
 
-    const result = await createAgendamento(event);
+    const result = await create(event);
 
     expect(result).toEqual({
       statusCode: 400,
@@ -112,7 +112,7 @@ describe('createAgendamento Handler', () => {
     });
   });
 
-  it('deve retornar 400 se houver erro de validação data_horario ausente', async () => {
+  it('should return 400 if there is a validation error: missing data_horario', async () => {
     const event: APIGatewayEvent = {
       body: JSON.stringify({
         medico_id: 1,
@@ -120,7 +120,7 @@ describe('createAgendamento Handler', () => {
       }),
     } as APIGatewayEvent;
 
-    const result = await createAgendamento(event);
+    const result = await create(event);
 
     expect(result).toEqual({
       statusCode: 400,
@@ -130,7 +130,7 @@ describe('createAgendamento Handler', () => {
     });
   });
 
-  it('deve retornar 400 se houver erro de validação data_horario não encontrado', async () => {
+  it('should return 400 if there is a validation error: data_horario not found', async () => {
     const event: APIGatewayEvent = {
       body: JSON.stringify({
         medico_id: 1,
@@ -139,8 +139,8 @@ describe('createAgendamento Handler', () => {
       }),
     } as APIGatewayEvent;
 
-    (create as jest.Mock).mockRejectedValue(new AppError(ErrorMessages.HORARIO_NAO_DISPONIVEL));
-    const result = await createAgendamento(event);
+    (createAppointment as jest.Mock).mockRejectedValue(new AppError(ErrorMessages.HORARIO_NAO_DISPONIVEL));
+    const result = await create(event);
 
     expect(result).toEqual({
       statusCode: 400,
@@ -150,7 +150,7 @@ describe('createAgendamento Handler', () => {
     });
   });
 
-  it('deve retornar 500 em caso de erro inesperado', async () => {
+  it('should return 500 in case of an unexpected error', async () => {
     const event: APIGatewayEvent = {
       body: JSON.stringify({
         medico_id: 1,
@@ -159,14 +159,14 @@ describe('createAgendamento Handler', () => {
       }),
     } as unknown as APIGatewayEvent;
 
-    (create as jest.Mock).mockRejectedValue(new Error('Erro inesperado'));
+    (createAppointment as jest.Mock).mockRejectedValue(new Error('Erro inesperado'));
 
-    const result = await createAgendamento(event);
+    const result = await create(event);
 
     expect(result).toEqual({
       statusCode: 500,
       body: JSON.stringify({
-        message: 'Internal Server Error',
+        message: ErrorMessages.INTERNAL_ERROR,
         error: 'Erro inesperado',
       }),
     });

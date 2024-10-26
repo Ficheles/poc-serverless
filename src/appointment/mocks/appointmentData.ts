@@ -1,6 +1,6 @@
-import { AgendamentoResponse } from '../interface/agendamentoTypes';
+import { AppointmentResponse } from '../interface/appointmentTypes';
 
-export const agendamentoResponse: AgendamentoResponse = {
+export const appointmentResponse: AppointmentResponse = {
   mensagem: 'Agendamento realizado com sucesso',
   agendamento: {
     medico: 'Dr. João Silva',

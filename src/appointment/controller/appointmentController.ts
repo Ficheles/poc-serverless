@@ -1,13 +1,12 @@
-import { create } from '../service/agendamentoService';
-// import { validate } from '../validation/agendamentoValidate';
 import { APIGatewayEvent, APIGatewayProxyResult } from 'aws-lambda';
 import { getErrorMessage } from '../../utils/error';
-import { Agendamento, AgendamentoResponse } from '../interface/agendamentoTypes';
+import { Appointment, AppointmentResponse } from '../interface/appointmentTypes';
 import { AppError } from '../../utils/appError';
 import { ErrorMessages } from '../../utils/errorMessages';
-import { validate } from '../validation/agendamentoValidate';
+import { createAppointment } from '../service/appointmentService';
+import { validate } from '../validation/appointmentValidate';
 
-export const createAgendamento = async (event: APIGatewayEvent): Promise<APIGatewayProxyResult> => {
+export const create = async (event: APIGatewayEvent): Promise<APIGatewayProxyResult> => {
   try {
     if (!event.body) {
       return {
@@ -21,16 +20,16 @@ export const createAgendamento = async (event: APIGatewayEvent): Promise<APIGate
     const data = JSON.parse(event.body);
     validate(data);
 
-    const appointment: Agendamento = await create(data);
+    const appointment: Appointment = await createAppointment(data);
 
-    const agendamentoResponse: AgendamentoResponse = {
+    const appointmentResponse: AppointmentResponse = {
       mensagem: 'Agendamento realizado com sucesso',
       agendamento: appointment,
     };
 
     return {
       statusCode: 201,
-      body: JSON.stringify(agendamentoResponse),
+      body: JSON.stringify(appointmentResponse),
     };
   } catch (error) {
     if (error instanceof AppError) {

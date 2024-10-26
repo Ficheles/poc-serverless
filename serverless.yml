@@ -19,7 +19,7 @@ functions:
           path: /agendas
           method: get
   agendamento:
-    handler: dist/agendamento/controller/agendamentoController.createAgendamento
+    handler: dist/appointment/controller/appointmentController.create
     events:
       - httpApi:
           path: /agendamento
