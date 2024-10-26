@@ -1,6 +1,6 @@
-import { Agenda } from '../interface/agendaType';
+import { Schedule } from '../interface/scheduleType';
 
-export const agendas: Agenda[] = [
+export const schedules: Schedule[] = [
   {
     id: 1,
     nome: 'Dr. João Silva',

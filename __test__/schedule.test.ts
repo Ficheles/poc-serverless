@@ -1,14 +1,14 @@
-import { main, createAgenda } from '../src/agenda/controller/agendaController';
-import { getAll, create } from '../src/agenda/service/agendaService'; // Importe as funções necessárias
+import { main, createSchedule } from '../src/schedule/controller/scheduleController';
+import { getAll, create } from '../src/schedule/service/scheduleService'; // Importe as funções necessárias
 import { APIGatewayEvent } from 'aws-lambda';
 import { AppError } from '../src/utils/appError'; // Importe a classe de erro
 import { ErrorMessages } from '../src/utils/errorMessages'; // Ajuste o caminho conforme necessário
 
-jest.mock('../src/agenda/service/agendaService'); // Mock dos serviços
+jest.mock('../src/schedule/service/scheduleService'); // Mock dos serviços
 
 describe('Agenda Handlers', () => {
   describe('main', () => {
-    it('deve retornar 200 e a lista de médicos', async () => {
+    it('should return 200 and the list of doctors', async () => {
       (getAll as jest.Mock).mockResolvedValueOnce([
         {
           id: 2,
@@ -36,7 +36,7 @@ describe('Agenda Handlers', () => {
       });
     });
 
-    it('deve retornar 500 em caso de erro inesperado', async () => {
+    it('should return 500 in case of an unexpected error', async () => {
       (getAll as jest.Mock).mockRejectedValueOnce(new Error('Erro inesperado'));
 
       const event = {} as APIGatewayEvent;
@@ -51,7 +51,7 @@ describe('Agenda Handlers', () => {
       });
     });
 
-    it('deve retornar o status do AppError', async () => {
+    it('should return the status of the AppError', async () => {
       const appError = new AppError('Erro de Aplicação', 400);
       (getAll as jest.Mock).mockRejectedValueOnce(appError);
 
@@ -65,20 +65,20 @@ describe('Agenda Handlers', () => {
     });
   });
 
-  describe('createAgenda', () => {
+  describe('createSchedule', () => {
     const agendaDto = {
       nome: 'Dr Carlos',
       especialidade: 'Cardiologia',
       horarios_disponiveis: ['2024-10-05T09:00:00Z'],
     };
 
-    it('deve retornar 200 e a agenda criada', async () => {
+    it('should return 200 and the created appointment', async () => {
       (create as jest.Mock).mockResolvedValueOnce(agendaDto);
 
       const event = {
         body: JSON.stringify(agendaDto),
       } as APIGatewayEvent;
-      const result = await createAgenda(event);
+      const result = await createSchedule(event);
 
       expect(result).toEqual({
         statusCode: 200,
@@ -88,9 +88,9 @@ describe('Agenda Handlers', () => {
       });
     });
 
-    it('deve retornar 400 se o corpo estiver ausente', async () => {
+    it('should return 400 if the body is absent', async () => {
       const event = { body: null } as APIGatewayEvent;
-      const result = await createAgenda(event);
+      const result = await createSchedule(event);
 
       expect(result).toEqual({
         statusCode: 400,
@@ -100,14 +100,14 @@ describe('Agenda Handlers', () => {
       });
     });
 
-    it('deve retornar 500 em caso de erro inesperado', async () => {
+    it('should return 500 in case of an unexpected error', async () => {
       const messageError = 'Erro inesperado';
       (create as jest.Mock).mockRejectedValueOnce(new Error(messageError));
 
       const event = {
         body: JSON.stringify(agendaDto),
       } as APIGatewayEvent;
-      const result = await createAgenda(event);
+      const result = await createSchedule(event);
 
       expect(result).toEqual({
         statusCode: 500,
@@ -118,7 +118,7 @@ describe('Agenda Handlers', () => {
       });
     });
 
-    it('deve retornar o status do AppError', async () => {
+    it('should return the status of the AppError', async () => {
       const messageError = 'Erro de Aplicação';
       const appError = new AppError(messageError, 400);
       (create as jest.Mock).mockRejectedValueOnce(appError);
@@ -126,7 +126,7 @@ describe('Agenda Handlers', () => {
       const event = {
         body: JSON.stringify(agendaDto),
       } as APIGatewayEvent;
-      const result = await createAgenda(event);
+      const result = await createSchedule(event);
 
       expect(result).toEqual({
         statusCode: 400,

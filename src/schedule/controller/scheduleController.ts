@@ -1,4 +1,4 @@
-import { create, getAll } from '../service/agendaService';
+import { create, getAll } from '../service/scheduleService';
 import { APIGatewayEvent, APIGatewayProxyResult } from 'aws-lambda';
 import { AppError } from '../../utils/appError';
 import { getErrorMessage } from '../../utils/error';
@@ -32,7 +32,7 @@ export const main = async (event: APIGatewayEvent): Promise<APIGatewayProxyResul
   }
 };
 
-export const createAgenda = async (event: APIGatewayEvent): Promise<APIGatewayProxyResult> => {
+export const createSchedule = async (event: APIGatewayEvent): Promise<APIGatewayProxyResult> => {
   try {
     if (!event.body) {
       return {
@@ -59,7 +59,6 @@ export const createAgenda = async (event: APIGatewayEvent): Promise<APIGatewayPr
       };
     }
 
-    // Erros não tratados
     return {
       statusCode: 500,
       body: JSON.stringify({

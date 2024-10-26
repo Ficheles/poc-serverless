@@ -40,7 +40,6 @@ export const createAgendamento = async (event: APIGatewayEvent): Promise<APIGate
       };
     }
 
-    // Erros não tratados
     return {
       statusCode: 500,
       body: JSON.stringify({

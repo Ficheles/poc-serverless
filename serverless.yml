@@ -13,7 +13,7 @@ provider:
 
 functions:
   agendas:
-    handler: dist/agenda/controller/agendaController.main
+    handler: dist/schedule/controller/scheduleController.main
     events:
       - httpApi:
           path: /agendas
