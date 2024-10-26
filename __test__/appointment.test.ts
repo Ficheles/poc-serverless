@@ -69,7 +69,7 @@ describe('createAgendamento Handler', () => {
     expect(result).toEqual({
       statusCode: 400,
       body: JSON.stringify({
-        message: ErrorMessages.CAMPO_OBRIGATORIO('medico_id'), // Certifique-se que isso corresponde à sua implementação de validação
+        message: ErrorMessages.REQUIRED_FIELD('medico_id'), // Certifique-se que isso corresponde à sua implementação de validação
       }),
     });
   });
@@ -83,13 +83,13 @@ describe('createAgendamento Handler', () => {
       }),
     } as APIGatewayEvent;
 
-    (createAppointment as jest.Mock).mockRejectedValue(new AppError(ErrorMessages.MEDICO_NAO_ENCONTRADO));
+    (createAppointment as jest.Mock).mockRejectedValue(new AppError(ErrorMessages.DOCTOR_NOT_FOUND));
     const result = await create(event);
 
     expect(result).toEqual({
       statusCode: 400,
       body: JSON.stringify({
-        message: ErrorMessages.MEDICO_NAO_ENCONTRADO,
+        message: ErrorMessages.DOCTOR_NOT_FOUND,
       }),
     });
   });
@@ -107,7 +107,7 @@ describe('createAgendamento Handler', () => {
     expect(result).toEqual({
       statusCode: 400,
       body: JSON.stringify({
-        message: ErrorMessages.CAMPO_OBRIGATORIO('paciente_nome'), // Certifique-se que isso corresponde à sua implementação de validação
+        message: ErrorMessages.REQUIRED_FIELD('paciente_nome'), // Certifique-se que isso corresponde à sua implementação de validação
       }),
     });
   });
@@ -125,7 +125,7 @@ describe('createAgendamento Handler', () => {
     expect(result).toEqual({
       statusCode: 400,
       body: JSON.stringify({
-        message: ErrorMessages.CAMPO_OBRIGATORIO('data_horario'), // Certifique-se que isso corresponde à sua implementação de validação
+        message: ErrorMessages.REQUIRED_FIELD('data_horario'), // Certifique-se que isso corresponde à sua implementação de validação
       }),
     });
   });
@@ -139,13 +139,13 @@ describe('createAgendamento Handler', () => {
       }),
     } as APIGatewayEvent;
 
-    (createAppointment as jest.Mock).mockRejectedValue(new AppError(ErrorMessages.HORARIO_NAO_DISPONIVEL));
+    (createAppointment as jest.Mock).mockRejectedValue(new AppError(ErrorMessages.TIME_NOT_AVAILABLE));
     const result = await create(event);
 
     expect(result).toEqual({
       statusCode: 400,
       body: JSON.stringify({
-        message: ErrorMessages.HORARIO_NAO_DISPONIVEL,
+        message: ErrorMessages.TIME_NOT_AVAILABLE,
       }),
     });
   });

@@ -6,9 +6,9 @@ import { Appointment } from '../interface/appointmentTypes';
 
 export const createAppointment = async (appointmentDto: AppointmentDto): Promise<Appointment> => {
   const doctor = schedules.find(doctor => doctor.id === appointmentDto.medico_id);
-  if (!doctor) throw new AppError(ErrorMessages.MEDICO_NAO_ENCONTRADO);
+  if (!doctor) throw new AppError(ErrorMessages.DOCTOR_NOT_FOUND);
   if (!doctor.horarios_disponiveis.some((horario: string) => horario == appointmentDto.data_horario)) {
-    throw new AppError(ErrorMessages.HORARIO_NAO_DISPONIVEL);
+    throw new AppError(ErrorMessages.TIME_NOT_AVAILABLE);
   }
   const appointment: Appointment = {
     medico: doctor.nome,
