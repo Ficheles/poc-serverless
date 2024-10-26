@@ -19,6 +19,7 @@ const config = [
     },
     ignores: [
       'dist/**', // Ignora todos os arquivos dentro do diretório dist
+      '.esbuild/**', // Ignora todos os arquivos dentro do diretório dist
       'eslint.config.js', // Ignora o arquivo eslint.config.js
       'jest.config.js', // Ignora o arquivo jest.config.js
       'tsconfig.js', // Ignora o arquivo
