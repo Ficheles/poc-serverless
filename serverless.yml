@@ -18,6 +18,12 @@ functions:
       - httpApi:
           path: /agendas
           method: get
+  agendamento:
+    handler: dist/agendamento/controller/agendamentoController.createAgendamento
+    events:
+      - httpApi:
+          path: /agendamento
+          method: post
 
 # Configuração de plugins
 plugins:
