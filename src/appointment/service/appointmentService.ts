@@ -2,7 +2,7 @@ import { schedules } from '../../schedule/mocks/schedulesData';
 import { AppError } from '../../utils/appError';
 import { ErrorMessages } from '../../utils/errorMessages';
 import { AppointmentDto } from '../dto/appointmentDto';
-import { Appointment } from '../interface/appointmentTypes';
+import { Appointment } from '../interface/appointment';
 
 export const createAppointment = async (appointmentDto: AppointmentDto): Promise<Appointment> => {
   const doctor = schedules.find(doctor => doctor.id === appointmentDto.medico_id);

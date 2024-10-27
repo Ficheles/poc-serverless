@@ -1,4 +1,4 @@
-import { AppointmentResponse } from '../interface/appointmentTypes';
+import { AppointmentResponse } from '../dto/appointmentoResponse';
 
 export const appointmentResponse: AppointmentResponse = {
   mensagem: 'Agendamento realizado com sucesso',

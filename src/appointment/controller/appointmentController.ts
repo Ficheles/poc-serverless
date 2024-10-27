@@ -1,6 +1,8 @@
 import { APIGatewayEvent, APIGatewayProxyResult } from 'aws-lambda';
 import { getErrorMessage } from '../../utils/error';
-import { Appointment, AppointmentResponse } from '../interface/appointmentTypes';
+import { Appointment } from '../interface/appointment';
+import { AppointmentDto } from '../dto/appointmentDto';
+import { AppointmentResponse } from '../dto/appointmentoResponse';
 import { AppError } from '../../utils/appError';
 import { ErrorMessages } from '../../utils/errorMessages';
 import { createAppointment } from '../service/appointmentService';
@@ -17,10 +19,10 @@ export const create = async (event: APIGatewayEvent): Promise<APIGatewayProxyRes
       };
     }
 
-    const data = JSON.parse(event.body);
-    validate(data);
+    const appointmentDto: AppointmentDto = JSON.parse(event.body);
+    validate(appointmentDto);
 
-    const appointment: Appointment = await createAppointment(data);
+    const appointment: Appointment = await createAppointment(appointmentDto);
 
     const appointmentResponse: AppointmentResponse = {
       mensagem: 'Agendamento realizado com sucesso',
