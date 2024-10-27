@@ -1,4 +1,4 @@
-import { Schedule } from '../interface/scheduleType';
+import { Schedule } from '../interface/schedule';
 import { ScheduleDto } from '../dto/scheduleDto';
 import { schedules } from '../mocks/schedulesData';
 

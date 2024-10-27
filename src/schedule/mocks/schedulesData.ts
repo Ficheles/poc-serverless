@@ -1,4 +1,4 @@
-import { Schedule } from '../interface/scheduleType';
+import { Schedule } from '../interface/schedule';
 
 export const schedules: Schedule[] = [
   {
